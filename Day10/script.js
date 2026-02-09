@@ -1,43 +1,37 @@
-// Create a new element and set its content
-const newParagraph = document.createElement("p");
-newParagraph.textContent = "This is a dynamically created paragraph.";
-console.log(newParagraph);
+// function handleClick({
+//     document.getElementById("btn").
+//     textContent="Clicked"
+// })
+// function handleClick(){
+    
 
-// Append the new element to the container
-const container = document.getElementById("container");
-container.appendChild(newParagraph);
+// }
 
-// remove Element
-//remove the first paragraph of container
-document.querySelector("#container p").remove();
+//   function handleClick() {
+//     const head=document.querySelector
+//     ("h1");
+//     head.style.color="tomato"
 
+// function handleClick() {
+//     const spanEle=document.createElement("span").textContent ="This is span element";
+//     const image = document.createElement("img");
 
+//     image.setAttribute("src","https://www.krmangalam.edu.in/wp-content/uploads/2024/02/178bs_Best-Colleges-for-Master-in-Commerce-in-Gurgaon-768x431-1.webp");
 
-const image = document.createElement("img");
+//     image.setAttribute("alt","K.R Mangalam");
+//     document.getElementById("content").append(spanEle);
+//     document.getElementById("content").append(image);
+// }
+// addEventListener("click",handleClick)
 
-image.setAttribute("src","https://www.krmangalam.edu.in/wp-content/uploads/2024/02/178bs_Best-Colleges-for-Master-in-Commerce-in-Gurgaon-768x431-1.webp");
+document.getElementById("btn").addEventListener
+("click",()=>{     const spanEle=document.createElement("span").textContent ="This is span element";
+    const image = document.createElement("img");
 
-image.setAttribute("alt","K.R Mangalam");
+    image.setAttribute("src","https://www.krmangalam.edu.in/wp-content/uploads/2024/02/178bs_Best-Colleges-for-Master-in-Commerce-in-Gurgaon-768x431-1.webp");
 
-const gallery = document.getElementById("gallery");
-gallery.appendChild(image);
+    image.setAttribute("alt","K.R Mangalam");
+    document.getElementById("content").append(spanEle);
+    document.getElementById("content").append(image);
+})
 
-
-// Date method
-
-let date = new Date()
-console.log(date);
-
-setInterval(()=>{
-let date = new Date()
-console.log(date);
-
-let hour = date.getHours() % 12 || 12;
-let min=date.getMinutes();
-let second= date.getSeconds();
-
-let clock = document.getElementById("digi-clock");
-
-clock.textContent=`${hour} : ${min} : ${second}`
-
-},1000)
