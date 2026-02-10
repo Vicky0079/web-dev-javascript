@@ -1,0 +1,124 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#48c6ef,#6f86d6);
+    min-height:100vh;
+}
+
+.page{
+    max-width:1100px;
+    margin:auto;
+    padding:30px;
+}
+
+.page h1{
+    color:white;
+    text-align:center;
+    margin-bottom:25px;
+}
+
+/* GRID LAYOUT */
+.dashboard{
+    display:grid;
+    grid-template-columns: 1fr 2fr;
+    gap:25px;
+}
+
+/* CARD STYLE */
+.card{
+    background:white;
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* HEADINGS */
+.card h2{
+    color:#5b6bdc;
+    margin-bottom:15px;
+}
+
+/* FORM */
+.form-card label{
+    font-size:14px;
+    margin-top:10px;
+    display:block;
+}
+
+.form-card input,
+.form-card select,
+.form-card textarea{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    margin-top:5px;
+    outline:none;
+}
+
+textarea{
+    height:80px;
+    resize:none;
+}
+
+/* BUTTONS */
+button{
+    border:none;
+    padding:10px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    background:#e5e7eb;
+    margin-top:15px;
+}
+
+.primary{
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    width:100%;
+}
+
+/* EVENTS ACTIONS */
+.actions{
+    display:flex;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.actions button{
+    flex:1;
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+}
+
+/* EMPTY STATE */
+.empty{
+    text-align:center;
+    color:#777;
+    padding:40px 10px;
+    border:2px dashed #cbd5e1;
+    border-radius:12px;
+}
+
+/* DOM BOX */
+.dom-card{
+    margin-top:25px;
+}
+
+.dom-box{
+    background:#f1f5f9;
+    padding:12px;
+    border-radius:10px;
+    margin-top:10px;
+}
+
+/* RESPONSIVE */
+@media(max-width:800px){
+    .dashboard{
+        grid-template-columns:1fr;
+    }
+}
