@@ -21,3 +21,11 @@
 10.difference between setInterval and setTimeout.
 11.What is DOME
 12.Difference between by get element by id and get element by class name
+13.Difference between textcontent,inerhtml and inertext explanation or code both paractice
+14.DOM traversal method
+15.Add event lisntner
+16.What is execution context and call stack
+17.What is event loop and how it excutes & how it excute asynchoronous codes
+18.What is callback hell & disadvantage of call back hell
+19.Explaine of the life cycle of promise & how it manages asynchorous function bettter the call back hell
+20.What is prmoise chaining and disadvantage of prmoise chaning
