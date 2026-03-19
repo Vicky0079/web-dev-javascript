@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Smart Weather Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ---------- THEMES ---------- */
+:root {
+    --bg: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    --card: rgba(255,255,255,0.15);
+    --text: #ffffff;
+}
+
+.light {
+    --bg: linear-gradient(135deg, #e3f2fd, #ffffff);
+    --card: rgba(255,255,255,0.9);
+    --text: #111;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 20px;
+    transition: 0.4s;
+}
+
+/* ---------- LAYOUT ---------- */
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.parent {
+    display: flex;
+    gap: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ---------- CARD ---------- */
+.card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    background: var(--card);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* ---------- INPUT ---------- */
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+/* ---------- BUTTON ---------- */
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #ff7b54;
+    color: white;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* ---------- WEATHER ---------- */
+.weather-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.2);
+}
+
+/* ---------- HISTORY ---------- */
+.history button {
+    margin: 5px;
+    border-radius: 20px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:700px) {
+    .parent {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🌤 Smart Weather Pro</h1>
+
+<div class="parent">
+
+<div class="card">
+<h3>Search City</h3>
+
+<div class="input-group">
+<input id="cityInput" placeholder="Enter city...">
+<button onclick="handleSearch()">Search</button>
+</div>
+
+<br>
+
+<button onclick="toggleTheme()">🌙 Toggle Mode</button>
+<button onclick="getLocationWeather()">📍 My Location</button>
+
+<br><br>
+
+<h3>History</h3>
+<div id="history" class="history"></div>
+
+</div>
+
+<div class="card">
+<h3>Weather Info</h3>
+<div id="weather"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+const API_KEY = "4d270c77fad86c796671cb85ddd178cf";
+
+const weatherBox = document.getElementById("weather");
+const historyBox = document.getElementById("history");
+const cityInput = document.getElementById("cityInput");
+
+/* ---------- THEME ---------- */
+function toggleTheme() {
+    document.body.classList.toggle("light");
+}
+
+/* ---------- FETCH ---------- */
+async function getWeather(city) {
+    const res = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+    );
+
+    if (!res.ok) throw new Error("City not found");
+
+    return res.json();
+}
+
+/* ---------- LOCATION ---------- */
+function getLocationWeather() {
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+        const {latitude, longitude} = pos.coords;
+
+        const res = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+        );
+
+        const data = await res.json();
+        renderWeather(data);
+        saveHistory(data.name);
+    });
+}
+
+/* ---------- RENDER ---------- */
+function renderWeather(d) {
+    const icon = d.weather[0].icon;
+
+    weatherBox.innerHTML = `
+    <div style="text-align:center">
+        <img src="https://openweathermap.org/img/wn/${icon}@2x.png">
+        <h2>${d.name}, ${d.sys.country}</h2>
+        <h1>${d.main.temp}°C</h1>
+    </div>
+
+    <div class="weather-item"><span>Condition</span><span>${d.weather[0].main}</span></div>
+    <div class="weather-item"><span>Humidity</span><span>${d.main.humidity}%</span></div>
+    <div class="weather-item"><span>Wind</span><span>${d.wind.speed} m/s</span></div>
+
+    <canvas id="chart" height="100"></canvas>
+    `;
+
+    drawChart(d.main.temp);
+}
+
+/* ---------- CHART ---------- */
+function drawChart(temp) {
+    const canvas = document.getElementById("chart");
+    const ctx = canvas.getContext("2d");
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    ctx.beginPath();
+    ctx.moveTo(10,80);
+    ctx.lineTo(100,80-temp);
+    ctx.lineTo(200,80-temp+10);
+    ctx.stroke();
+
+    ctx.fillText("Temp: "+temp+"°C",10,20);
+}
+
+/* ---------- HISTORY ---------- */
+function saveHistory(city) {
+    let h = JSON.parse(localStorage.getItem("history")) || [];
+
+    h = h.filter(i => i.city !== city);
+
+    h.push({
+        city,
+        time: new Date().toLocaleTimeString()
+    });
+
+    h = h.slice(-5);
+
+    localStorage.setItem("history", JSON.stringify(h));
+
+    showHistory();
+}
+
+function showHistory() {
+    let h = JSON.parse(localStorage.getItem("history")) || [];
+
+    historyBox.innerHTML = "";
+
+    h.forEach(i => {
+        let b = document.createElement("button");
+        b.innerText = `${i.city} (${i.time})`;
+        b.onclick = () => search(i.city);
+        historyBox.appendChild(b);
+    });
+
+    if (h.length) {
+        let clear = document.createElement("button");
+        clear.innerText = "Clear";
+        clear.onclick = () => {
+            localStorage.removeItem("history");
+            showHistory();
+        };
+        historyBox.appendChild(clear);
+    }
+}
+
+/* ---------- SEARCH ---------- */
+async function search(city) {
+    weatherBox.innerHTML = "Loading...";
+
+    try {
+        const data = await getWeather(city);
+        renderWeather(data);
+        saveHistory(data.name);
+    } catch (e) {
+        weatherBox.innerHTML = `<p style="color:red">${e.message}</p>`;
+    }
+}
+
+function handleSearch() {
+    const city = cityInput.value.trim();
+    if (city) search(city);
+}
+
+cityInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") handleSearch();
+});
+
+showHistory();
+</script>
+
+</body>
+</html>
