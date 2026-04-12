@@ -9,15 +9,24 @@ const UseStateOne = () => {
         // count = count+1
         setCount (count+1);
     }
-    return (
+ function decrease(){
+        setCount(count-1);
+    }
+    function reset(){
+        setCount(0);
+    }    
+    return(
         <>
-            <div>UseStateOne</div>
-            <h1>Count : {count}</h1>
-            {/* <button onClick={increase}>Click</button>
-            <button onClick=()=></>{setCount(count-1)}></button>
-            <button onClick={increase}>Click</button> */}
+        <div>UseStateOne</div>
+        <h1>Count:{count}</h1>
+        <button onClick={increase}>+</button>
+        <br/>
+        <button onClick={decrease}>-</button>
+        <br/>
+        <button onClick={reset}>Reset</button>
         </>
     )
 }
+
 
 export default UseStateOne;

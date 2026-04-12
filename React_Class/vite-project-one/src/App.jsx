@@ -4,6 +4,7 @@ import { add, subtract } from './Math.jsx';
 import Parent from './propsPassing/Parent.jsx';
 import IfElseComp from './ConceptComp/IfElseComp.jsx';
 import UseStateOne from './Hooks/UseStateOne.jsx';
+import MultiCounter from './Hooks/MultiCounter.jsx';
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
       <Parent/>
       <UseStateOne/>
       <IfElseComp/>
+      <MultiCounter/>
     </>
   )
 }
