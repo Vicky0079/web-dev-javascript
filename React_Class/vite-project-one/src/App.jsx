@@ -5,6 +5,10 @@ import Parent from './propsPassing/Parent.jsx';
 import IfElseComp from './ConceptComp/IfElseComp.jsx';
 import UseStateOne from './Hooks/UseStateOne.jsx';
 import MultiCounter from './Hooks/MultiCounter.jsx';
+import Form from './Hooks/Forminputhandling.jsx';
+import Theme from './Hooks/Darklightthemetoggle.jsx';
+import Todolist from './Hooks/Todolist.jsx';
+import Password from './Hooks/Showhidepassword.jsx';
 
 
 const App = () => {
@@ -19,6 +23,10 @@ const App = () => {
       <UseStateOne/>
       <IfElseComp/>
       <MultiCounter/>
+      <Form/>
+      <Theme/>
+      <Todolist/>
+      <Password/>
     </>
   )
 }

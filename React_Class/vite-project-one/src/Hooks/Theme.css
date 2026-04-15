@@ -1,0 +1,42 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-family: Arial, sans-serif;
+}
+
+/* Light Mode */
+.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Dark Mode */
+.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Button Styling */
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Button colors based on theme */
+.light button {
+  background-color: #000;
+  color: #fff;
+}
+
+.dark button {
+  background-color: #fff;
+  color: #000;
+}
